@@ -1,4 +1,7 @@
 import shoppingCartReducer, {
+  getShoppingCartItemQuantity,
+  getShoppingCartItemsCount,
+  getTotalPrice,
   initialState,
   ShoppingCartAction,
   ShoppingCartState
@@ -82,5 +85,58 @@ describe('shopping cart reducer', () => {
       book,
       quantity: 1
     });
+  });
+});
+
+describe('shopping cart selectors', () => {
+  const state: ShoppingCartState = {
+    items: [
+      {
+        book: {
+          "isbn": "1",
+          "title": "book title 1",
+          "price": 35,
+          "cover": "http://cover",
+          "synopsis": [],
+        },
+        quantity: 1
+      },
+      {
+        book: {
+          "isbn": "2",
+          "title": "book title 2",
+          "price": 20,
+          "cover": "http://cover",
+          "synopsis": [],
+        },
+        quantity: 2
+      }
+    ]
+  };
+
+  it('should get shopping cart items count', () => {
+    const count = getShoppingCartItemsCount(state);
+
+    expect(count).toBe(3);
+  });
+
+  it('should get total price', () => {
+    const total = getTotalPrice(state);
+
+    expect(total).toBe(75);
+  });
+
+  it('should get shopping cart item quantity with isbn which is present in shopping cart', () => {
+    const shoppingCartItemQuantity = getShoppingCartItemQuantity(state.items[0].book.isbn);
+    const quantity = shoppingCartItemQuantity(state);
+
+    expect(quantity).toBe(1);
+  });
+
+  it('should get shopping cart item quantity with isbn which is not present in shopping cart', () => {
+    const shoppingCartItemQuantity = getShoppingCartItemQuantity('inexistant isbn');
+    const quantity = shoppingCartItemQuantity(state);
+
+    expect(quantity).toBe(0);
   });
 });
