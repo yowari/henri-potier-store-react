@@ -26,7 +26,7 @@ jobs:
         run: yarn build
 
       - name: Test
-        run: yarn test -- --coverage
+        run: yarn test --coverage --watchAll=false --collectCoverageFrom='["src/**/*.{ts,tsx,js,jsx}","!src/**/*.stories.{ts,tsx,js,jsx}"]'
 
       - name: Coverage
         uses: codecov/codecov-action@v1
