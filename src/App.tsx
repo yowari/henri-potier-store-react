@@ -9,7 +9,7 @@ import AppRouter from './AppRouter';
 
 function App() {
   return (
-    <BrowserRouter>
+    <BrowserRouter basename="/henri-potier-store-react">
       <AppStateProvider>
 
         <AppRouter />
